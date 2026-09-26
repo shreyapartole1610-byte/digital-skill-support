@@ -34,6 +34,48 @@ header p {
     margin: 8px 0 0;
 }
 
+.login-box {
+    max-width: 400px;
+    margin: 50px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.10);
+}
+
+.login-box h2 {
+    text-align: center;
+    color: #12395d;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+button {
+    background: #1769aa;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.login-box button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+#loginMessage {
+    text-align: center;
+    margin-top: 15px;
+    color: red;
+}
+
 .container {
     max-width: 1100px;
     margin: 25px auto;
@@ -59,11 +101,6 @@ header p {
     margin: 10px 0;
     color: #12395d;
     font-size: 35px;
-}
-
-.card p {
-    margin: 0;
-    font-size: 16px;
 }
 
 .section {
@@ -94,18 +131,19 @@ th {
     color: white;
 }
 
-button {
-    background: #1769aa;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-}
-
 #message {
     text-align: center;
     margin: 15px;
     font-weight: bold;
+}
+
+.logout {
+    float: right;
+    background: #d9534f;
+}
+
+.clear {
+    clear: both;
 }
 </style>
 </head>
@@ -113,27 +151,67 @@ button {
 <body>
 
 <header>
+    <button class="logout" id="logoutBtn" style="display:none;">
+        Logout
+    </button>
+
     <h1>🔐 Admin Dashboard</h1>
     <p>Digital Skill Support for Local Government Office</p>
+
+    <div class="clear"></div>
 </header>
 
-<div class="container">
+
+<!-- LOGIN -->
+<div id="loginSection" class="login-box">
+
+    <h2>🔐 Admin Login</h2>
+
+    <input
+        type="email"
+        id="loginEmail"
+        placeholder="Enter admin email"
+    >
+
+    <input
+        type="password"
+        id="loginPassword"
+        placeholder="Enter password"
+    >
+
+    <button onclick="adminLogin()">
+        Login
+    </button>
+
+    <div id="loginMessage"></div>
+
+</div>
+
+
+<!-- DASHBOARD -->
+<div id="dashboardSection" class="container" style="display:none;">
 
     <div class="cards">
 
         <div class="card">
             <div>💬</div>
+
             <h2 id="feedbackCount">0</h2>
+
             <p>Total Feedback</p>
         </div>
 
+
         <div class="card">
             <div>📊</div>
+
             <h2 id="responseCount">0</h2>
+
             <p>Database Responses</p>
         </div>
 
     </div>
+
 
     <div class="section">
 
@@ -150,16 +228,17 @@ button {
             <table>
 
                 <thead>
+
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Area</th>
                         <th>Feedback</th>
                     </tr>
+
                 </thead>
 
-                <tbody id="feedbackTable">
-                </tbody>
+                <tbody id="feedbackTable"></tbody>
 
             </table>
 
@@ -169,15 +248,78 @@ button {
 
 </div>
 
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
 const SUPABASE_URL =
 "https://lmojlnoiqqagifxoshgn.supabase.co";
 
+
 const SUPABASE_KEY =
 "sb_publishable_yldulfbRu9jgYHVhcUOe7A_PvmEs-v1"
 
 
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+// ADMIN LOGIN
+async function adminLogin() {
+
+    const email =
+        document.getElementById("loginEmail").value;
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+    const loginMessage =
+        document.getElementById("loginMessage");
+
+    if (!email || !password) {
+
+        loginMessage.innerText =
+            "Please enter email and password.";
+
+        return;
+    }
+
+    loginMessage.innerText = "Logging in...";
+
+    const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+    if (error) {
+
+        loginMessage.innerText =
+            "Login failed: " + error.message;
+
+        return;
+    }
+
+    loginMessage.innerText = "";
+
+    document.getElementById("loginSection").style.display =
+        "none";
+
+    document.getElementById("dashboardSection").style.display =
+        "block";
+
+    document.getElementById("logoutBtn").style.display =
+        "block";
+
+    loadFeedback();
+}
+
+
+// LOAD FEEDBACK
 async function loadFeedback() {
 
     const message =
@@ -188,74 +330,72 @@ async function loadFeedback() {
 
     message.innerText = "Loading...";
 
-    try {
+    const { data, error } =
+        await supabaseClient
+        .from("Feedback")
+        .select("name,email,area,feedback");
 
-        const response = await fetch(
-            SUPABASE_URL +
-            "/rest/v1/Feedback?select=name,email,area,feedback",
-            {
-                method: "GET",
-
-                headers: {
-                    "apikey": SUPABASE_KEY,
-                    "Authorization":
-                    "Bearer " + SUPABASE_KEY
-                }
-            }
-        );
-
-        if (!response.ok) {
-
-            const error =
-                await response.text();
-
-            throw new Error(error);
-        }
-
-        const data =
-            await response.json();
-
-        table.innerHTML = "";
-
-        data.forEach(function(row) {
-
-            const tr =
-                document.createElement("tr");
-
-            tr.innerHTML = `
-                <td>${row.name || ""}</td>
-                <td>${row.email || ""}</td>
-                <td>${row.area || "General"}</td>
-                <td>${row.feedback || ""}</td>
-            `;
-
-            table.appendChild(tr);
-
-        });
-
-        document.getElementById(
-            "feedbackCount"
-        ).innerText = data.length;
-
-        document.getElementById(
-            "responseCount"
-        ).innerText = data.length;
-
-        message.innerText =
-            "Feedback loaded successfully!";
-
-    } catch(error) {
+    if (error) {
 
         console.error(error);
 
         message.innerText =
             "Unable to load feedback.";
 
+        return;
     }
 
+    table.innerHTML = "";
+
+    data.forEach(function(row) {
+
+        const tr =
+            document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${row.name || ""}</td>
+            <td>${row.email || ""}</td>
+            <td>${row.area || "General"}</td>
+            <td>${row.feedback || ""}</td>
+        `;
+
+        table.appendChild(tr);
+
+    });
+
+
+    document.getElementById(
+        "feedbackCount"
+    ).innerText = data.length;
+
+
+    document.getElementById(
+        "responseCount"
+    ).innerText = data.length;
+
+
+    message.innerText =
+        "Feedback loaded successfully!";
 }
 
-loadFeedback();
+
+// LOGOUT
+document.getElementById("logoutBtn")
+.addEventListener("click", async function() {
+
+    await supabaseClient.auth.signOut();
+
+    document.getElementById("dashboardSection")
+        .style.display = "none";
+
+    document.getElementById("loginSection")
+        .style.display = "block";
+
+    document.getElementById("logoutBtn")
+        .style.display = "none";
+
+});
+
 
 </script>
 
