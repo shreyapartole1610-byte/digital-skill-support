@@ -18,6 +18,7 @@ body {
     color: #222;
 }
 
+/* HEADER */
 header {
     background: #12395d;
     color: white;
@@ -34,6 +35,7 @@ header p {
     margin: 8px 0 0;
 }
 
+/* LOGIN */
 .login-box {
     max-width: 400px;
     margin: 50px auto;
@@ -65,6 +67,10 @@ button {
     cursor: pointer;
 }
 
+button:hover {
+    opacity: 0.9;
+}
+
 .login-box button {
     width: 100%;
     margin-top: 10px;
@@ -76,12 +82,14 @@ button {
     color: red;
 }
 
+/* CONTAINER */
 .container {
     max-width: 1100px;
     margin: 25px auto;
     padding: 15px;
 }
 
+/* CARDS */
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -97,12 +105,17 @@ button {
     box-shadow: 0 3px 12px rgba(0,0,0,0.10);
 }
 
+.card .icon {
+    font-size: 30px;
+}
+
 .card h2 {
     margin: 10px 0;
     color: #12395d;
     font-size: 35px;
 }
 
+/* SECTION */
 .section {
     background: white;
     padding: 20px;
@@ -113,14 +126,50 @@ button {
 
 .section h2 {
     color: #12395d;
+    margin-top: 0;
+}
+
+/* ANALYSIS */
+.analysis-item {
+    margin: 20px 0;
+}
+
+.analysis-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+.progress {
+    width: 100%;
+    height: 22px;
+    background: #e5e9ef;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #1769aa;
+    border-radius: 20px;
+    transition: width 0.5s;
+}
+
+/* TABLE */
+.table-box {
+    overflow-x: auto;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    min-width: 650px;
 }
 
-th, td {
+th,
+td {
     padding: 12px;
     border-bottom: 1px solid #ddd;
     text-align: left;
@@ -131,12 +180,18 @@ th {
     color: white;
 }
 
+td {
+    background: white;
+}
+
+/* MESSAGE */
 #message {
     text-align: center;
     margin: 15px;
     font-weight: bold;
 }
 
+/* LOGOUT */
 .logout {
     float: right;
     background: #d9534f;
@@ -145,39 +200,68 @@ th {
 .clear {
     clear: both;
 }
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+    header h1 {
+        font-size: 21px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .section {
+        padding: 15px;
+    }
+}
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <header>
-    <button class="logout" id="logoutBtn" style="display:none;">
+
+    <button
+        class="logout"
+        id="logoutBtn"
+        style="display:none;">
         Logout
     </button>
 
     <h1>🔐 Admin Dashboard</h1>
-    <p>Digital Skill Support for Local Government Office</p>
+
+    <p>
+        Digital Skill Support for Local Government Office
+    </p>
 
     <div class="clear"></div>
+
 </header>
 
 
-<!-- LOGIN -->
-<div id="loginSection" class="login-box">
+<!-- LOGIN SECTION -->
+<div
+    id="loginSection"
+    class="login-box">
 
     <h2>🔐 Admin Login</h2>
 
     <input
         type="email"
         id="loginEmail"
-        placeholder="Enter admin email"
-    >
+        placeholder="Enter admin email">
 
     <input
         type="password"
         id="loginPassword"
-        placeholder="Enter password"
-    >
+        placeholder="Enter password">
 
     <button onclick="adminLogin()">
         Login
@@ -188,34 +272,155 @@ th {
 </div>
 
 
-<!-- DASHBOARD -->
-<div id="dashboardSection" class="container" style="display:none;">
+<!-- DASHBOARD SECTION -->
+<div
+    id="dashboardSection"
+    class="container"
+    style="display:none;">
 
+    <!-- CARDS -->
     <div class="cards">
 
         <div class="card">
-            <div>💬</div>
 
-            <h2 id="feedbackCount">0</h2>
+            <div class="icon">💬</div>
 
-            <p>Total Feedback</p>
+            <h2 id="feedbackCount">
+                0
+            </h2>
+
+            <p>
+                Total Feedback
+            </p>
+
         </div>
 
 
         <div class="card">
-            <div>📊</div>
 
-            <h2 id="responseCount">0</h2>
+            <div class="icon">📊</div>
 
-            <p>Database Responses</p>
+            <h2 id="responseCount">
+                0
+            </h2>
+
+            <p>
+                Database Responses
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">👥</div>
+
+            <h2 id="uniqueUsers">
+                0
+            </h2>
+
+            <p>
+                Users
+            </p>
+
         </div>
 
     </div>
 
 
+    <!-- ANALYSIS -->
     <div class="section">
 
-        <h2>💬 Feedback Details</h2>
+        <h2>
+            📈 Feedback Analysis
+        </h2>
+
+        <div class="analysis-item">
+
+            <div class="analysis-title">
+
+                <span>
+                    Positive / Useful Feedback
+                </span>
+
+                <span id="positivePercent">
+                    0%
+                </span>
+
+            </div>
+
+            <div class="progress">
+
+                <div
+                    id="positiveBar"
+                    class="progress-bar">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="analysis-item">
+
+            <div class="analysis-title">
+
+                <span>
+                    General Feedback
+                </span>
+
+                <span id="generalPercent">
+                    0%
+                </span>
+
+            </div>
+
+            <div class="progress">
+
+                <div
+                    id="generalBar"
+                    class="progress-bar">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="analysis-item">
+
+            <div class="analysis-title">
+
+                <span>
+                    Suggestions / Improvements
+                </span>
+
+                <span id="suggestionPercent">
+                    0%
+                </span>
+
+            </div>
+
+            <div class="progress">
+
+                <div
+                    id="suggestionBar"
+                    class="progress-bar">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FEEDBACK DETAILS -->
+    <div class="section">
+
+        <h2>
+            💬 Feedback Details
+        </h2>
 
         <button onclick="loadFeedback()">
             🔄 Refresh Feedback
@@ -223,22 +428,31 @@ th {
 
         <div id="message"></div>
 
-        <div style="overflow-x:auto; margin-top:20px;">
+        <div
+            class="table-box"
+            style="margin-top:20px;">
 
             <table>
 
                 <thead>
 
                     <tr>
+
                         <th>Name</th>
+
                         <th>Email</th>
+
                         <th>Area</th>
+
                         <th>Feedback</th>
+
                     </tr>
 
                 </thead>
 
-                <tbody id="feedbackTable"></tbody>
+                <tbody
+                    id="feedbackTable">
+                </tbody>
 
             </table>
 
@@ -249,16 +463,19 @@ th {
 </div>
 
 
+<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+
+/* SUPABASE SETTINGS */
 
 const SUPABASE_URL =
 "https://lmojlnoiqqagifxoshgn.supabase.co";
 
 
 const SUPABASE_KEY =
-"sb_publishable_yldulfbRu9jgYHVhcUOe7A_PvmEs-v1"
+"sb_publishable_yldulfbRu9jgYHVhcUOe7A_PvmEs-v1";
 
 
 const supabaseClient =
@@ -268,17 +485,25 @@ supabase.createClient(
 );
 
 
-// ADMIN LOGIN
+/* ADMIN LOGIN */
+
 async function adminLogin() {
 
     const email =
-        document.getElementById("loginEmail").value;
+        document.getElementById(
+            "loginEmail"
+        ).value;
 
     const password =
-        document.getElementById("loginPassword").value;
+        document.getElementById(
+            "loginPassword"
+        ).value;
 
     const loginMessage =
-        document.getElementById("loginMessage");
+        document.getElementById(
+            "loginMessage"
+        );
+
 
     if (!email || !password) {
 
@@ -288,52 +513,81 @@ async function adminLogin() {
         return;
     }
 
-    loginMessage.innerText = "Logging in...";
+
+    loginMessage.innerText =
+        "Logging in...";
+
 
     const { data, error } =
-        await supabaseClient.auth.signInWithPassword({
+        await supabaseClient.auth
+        .signInWithPassword({
+
             email: email,
+
             password: password
+
         });
+
 
     if (error) {
 
         loginMessage.innerText =
-            "Login failed: " + error.message;
+            "Login failed: " +
+            error.message;
 
         return;
     }
 
+
     loginMessage.innerText = "";
 
-    document.getElementById("loginSection").style.display =
-        "none";
 
-    document.getElementById("dashboardSection").style.display =
-        "block";
+    document.getElementById(
+        "loginSection"
+    ).style.display = "none";
 
-    document.getElementById("logoutBtn").style.display =
-        "block";
+
+    document.getElementById(
+        "dashboardSection"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "logoutBtn"
+    ).style.display = "block";
+
 
     loadFeedback();
+
 }
 
 
-// LOAD FEEDBACK
+/* LOAD FEEDBACK */
+
 async function loadFeedback() {
 
     const message =
-        document.getElementById("message");
+        document.getElementById(
+            "message"
+        );
 
     const table =
-        document.getElementById("feedbackTable");
+        document.getElementById(
+            "feedbackTable"
+        );
 
-    message.innerText = "Loading...";
+
+    message.innerText =
+        "Loading...";
+
 
     const { data, error } =
         await supabaseClient
         .from("Feedback")
-        .select("name,email,area,feedback");
+        .select(
+            "name,email,area,feedback"
+        );
+
 
     if (error) {
 
@@ -345,57 +599,269 @@ async function loadFeedback() {
         return;
     }
 
+
     table.innerHTML = "";
+
+
+    if (!data || data.length === 0) {
+
+        message.innerText =
+            "No feedback found.";
+
+        updateAnalysis([]);
+
+        return;
+    }
+
 
     data.forEach(function(row) {
 
         const tr =
-            document.createElement("tr");
+            document.createElement(
+                "tr"
+            );
+
 
         tr.innerHTML = `
-            <td>${row.name || ""}</td>
-            <td>${row.email || ""}</td>
-            <td>${row.area || "General"}</td>
-            <td>${row.feedback || ""}</td>
+
+            <td>
+                ${row.name || ""}
+            </td>
+
+            <td>
+                ${row.email || ""}
+            </td>
+
+            <td>
+                ${row.area || "General"}
+            </td>
+
+            <td>
+                ${row.feedback || ""}
+            </td>
+
         `;
+
 
         table.appendChild(tr);
 
     });
 
 
+    /* COUNTS */
+
     document.getElementById(
         "feedbackCount"
-    ).innerText = data.length;
+    ).innerText =
+        data.length;
 
 
     document.getElementById(
         "responseCount"
-    ).innerText = data.length;
+    ).innerText =
+        data.length;
+
+
+    /* UNIQUE USERS */
+
+    const emails =
+        data
+        .map(row => row.email)
+        .filter(email => email);
+
+
+    const unique =
+        new Set(emails);
+
+
+    document.getElementById(
+        "uniqueUsers"
+    ).innerText =
+        unique.size;
+
+
+    /* ANALYSIS */
+
+    updateAnalysis(data);
 
 
     message.innerText =
         "Feedback loaded successfully!";
+
 }
 
 
-// LOGOUT
-document.getElementById("logoutBtn")
-.addEventListener("click", async function() {
+/* FEEDBACK ANALYSIS */
 
-    await supabaseClient.auth.signOut();
+function updateAnalysis(data) {
 
-    document.getElementById("dashboardSection")
-        .style.display = "none";
+    const total =
+        data.length;
 
-    document.getElementById("loginSection")
-        .style.display = "block";
 
-    document.getElementById("logoutBtn")
-        .style.display = "none";
+    if (total === 0) {
 
-});
+        setPercentage(
+            "positivePercent",
+            "positiveBar",
+            0
+        );
 
+        setPercentage(
+            "generalPercent",
+            "generalBar",
+            0
+        );
+
+        setPercentage(
+            "suggestionPercent",
+            "suggestionBar",
+            0
+        );
+
+        return;
+    }
+
+
+    let positive = 0;
+
+    let suggestions = 0;
+
+
+    data.forEach(function(row) {
+
+        const text =
+            (row.feedback || "")
+            .toLowerCase();
+
+
+        if (
+            text.includes("good") ||
+            text.includes("useful") ||
+            text.includes("helpful") ||
+            text.includes("excellent") ||
+            text.includes("nice") ||
+            text.includes("great")
+        ) {
+
+            positive++;
+
+        }
+
+
+        if (
+            text.includes("suggest") ||
+            text.includes("improve") ||
+            text.includes("better") ||
+            text.includes("need")
+        ) {
+
+            suggestions++;
+
+        }
+
+    });
+
+
+    const positivePercent =
+        Math.round(
+            (positive / total) * 100
+        );
+
+
+    const suggestionPercent =
+        Math.round(
+            (suggestions / total) * 100
+        );
+
+
+    const generalPercent =
+        Math.max(
+            0,
+            100 -
+            positivePercent -
+            suggestionPercent
+        );
+
+
+    setPercentage(
+        "positivePercent",
+        "positiveBar",
+        positivePercent
+    );
+
+
+    setPercentage(
+        "generalPercent",
+        "generalBar",
+        generalPercent
+    );
+
+
+    setPercentage(
+        "suggestionPercent",
+        "suggestionBar",
+        suggestionPercent
+    );
+
+}
+
+
+/* PERCENTAGE DISPLAY */
+
+function setPercentage(
+    textId,
+    barId,
+    value
+) {
+
+    document.getElementById(
+        textId
+    ).innerText =
+        value + "%";
+
+
+    document.getElementById(
+        barId
+    ).style.width =
+        value + "%";
+
+}
+
+
+/* LOGOUT */
+
+document.getElementById(
+    "logoutBtn"
+)
+.addEventListener(
+    "click",
+    async function() {
+
+        await supabaseClient
+            .auth
+            .signOut();
+
+
+        document.getElementById(
+            "dashboardSection"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "loginSection"
+        ).style.display =
+            "block";
+
+
+        document.getElementById(
+            "logoutBtn"
+        ).style.display =
+            "none";
+
+    }
+);
 
 </script>
 
