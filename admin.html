@@ -413,7 +413,39 @@ td {
         </div>
 
     </div>
+<!-- CHARTS -->
+<div class="section">
 
+    <h2>📊 Feedback Charts</h2>
+
+    <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+        gap:25px;
+    ">
+
+        <div style="
+            background:#f8fafc;
+            padding:20px;
+            border-radius:12px;
+            text-align:center;
+        ">
+            <h3>Feedback Distribution</h3>
+            <canvas id="feedbackPieChart"></canvas>
+        </div>
+
+        <div style="
+            background:#f8fafc;
+            padding:20px;
+            border-radius:12px;
+        ">
+            <h3>Feedback Percentage</h3>
+            <canvas id="feedbackBarChart"></canvas>
+        </div>
+
+    </div>
+
+</div>
 
     <!-- FEEDBACK DETAILS -->
     <div class="section">
@@ -461,7 +493,10 @@ td {
     </div>
 
 </div>
-
+  <!-- CHART.JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -682,15 +717,14 @@ async function loadFeedback() {
 
     /* ANALYSIS */
 
-    updateAnalysis(data);
+updateAnalysis(data);
+updateCharts(data);
 
 
-    message.innerText =
-        "Feedback loaded successfully!";
+message.innerText =
+    "Feedback loaded successfully!";
 
 }
-
-
 /* FEEDBACK ANALYSIS */
 
 function updateAnalysis(data) {
@@ -827,7 +861,147 @@ function setPercentage(
         value + "%";
 
 }
+/* CHARTS */
 
+let pieChart;
+let barChart;
+
+function updateCharts(data) {
+
+    const total = data.length;
+
+    if (total === 0) {
+        return;
+    }
+
+    let positive = 0;
+    let suggestions = 0;
+
+    data.forEach(function(row) {
+
+        const text =
+            (row.feedback || "").toLowerCase();
+
+        if (
+            text.includes("good") ||
+            text.includes("useful") ||
+            text.includes("helpful") ||
+            text.includes("excellent") ||
+            text.includes("nice") ||
+            text.includes("great")
+        ) {
+            positive++;
+        }
+
+        if (
+            text.includes("suggest") ||
+            text.includes("improve") ||
+            text.includes("better") ||
+            text.includes("need")
+        ) {
+            suggestions++;
+        }
+
+    });
+
+    const positivePercent =
+        Math.round((positive / total) * 100);
+
+    const suggestionPercent =
+        Math.round((suggestions / total) * 100);
+
+    const generalPercent =
+        Math.max(
+            0,
+            100 -
+            positivePercent -
+            suggestionPercent
+        );
+
+
+    /* PIE CHART */
+
+    const pieCanvas =
+        document.getElementById("feedbackPieChart");
+
+    if (pieChart) {
+        pieChart.destroy();
+    }
+
+    pieChart = new Chart(
+        pieCanvas,
+        {
+            type: "pie",
+
+            data: {
+                labels: [
+                    "Positive / Useful",
+                    "General",
+                    "Suggestions"
+                ],
+
+                datasets: [{
+                    data: [
+                        positivePercent,
+                        generalPercent,
+                        suggestionPercent
+                    ]
+                }]
+            },
+
+            options: {
+                responsive: true
+            }
+        }
+    );
+
+
+    /* BAR CHART */
+
+    const barCanvas =
+        document.getElementById("feedbackBarChart");
+
+    if (barChart) {
+        barChart.destroy();
+    }
+
+    barChart = new Chart(
+        barCanvas,
+        {
+            type: "bar",
+
+            data: {
+                labels: [
+                    "Positive",
+                    "General",
+                    "Suggestions"
+                ],
+
+                datasets: [{
+                    label: "Percentage",
+
+                    data: [
+                        positivePercent,
+                        generalPercent,
+                        suggestionPercent
+                    ]
+                }]
+            },
+
+            options: {
+                responsive: true,
+
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        }
+    );
+
+  }
 
 /* LOGOUT */
 
