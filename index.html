@@ -379,5 +379,63 @@ Roll No.: 27</p>
     <p>© 2026 K.M. Agrawal College</p>
     <p>B.Sc. Information Technology</p>
 </div>
+<!-- Supabase Feedback Form -->
+<section id="database-feedback">
+    <h2>Feedback</h2>
+
+    <form id="feedbackForm">
+        <input type="text" id="name" placeholder="Enter your name" required>
+
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <textarea id="feedback" placeholder="Enter your feedback" required></textarea>
+
+        <button type="submit">Submit Feedback</button>
+    </form>
+
+    <p id="message"></p>
+</section>
+
+<script>
+const SUPABASE_URL = "https://lmojlnoiqqagifxoshgn.supabase.co";
+const SUPABASE_KEY = "sb_publishable_yldulfbRu9jgYHVhcUOe7A_PvmEs-v1"
+
+document.getElementById("feedbackForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const feedback = document.getElementById("feedback").value;
+
+    const response = await fetch(
+        SUPABASE_URL + "/rest/v1/Feedback",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "apikey": SUPABASE_KEY,
+                "Authorization": "Bearer " + SUPABASE_KEY,
+                "Prefer": "return=minimal"
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+              area: "General",
+                feedback: feedback
+            })
+        }
+    );
+
+    if (response.ok) {
+        document.getElementById("message").innerText =
+            "Feedback submitted successfully!";
+        document.getElementById("feedbackForm").reset();
+ } else {
+    const errorText = await response.text();
+    document.getElementById("message").innerText =
+        "Error: " + errorText;
+    }   
+});
+</script>
 </body>
 </html>
