@@ -457,6 +457,10 @@ td {
         <button onclick="loadFeedback()">
             🔄 Refresh Feedback
         </button>
+      
+      <button onclick="downloadFeedback()" style="margin-left:10px;">
+    📥 Download Feedback
+      </button>
 
         <div id="message"></div>
 
@@ -1036,7 +1040,57 @@ document.getElementById(
 
     }
 );
+/* DOWNLOAD FEEDBACK */
 
+async function downloadFeedback() {
+
+    const { data, error } =
+        await supabaseClient
+        .from("Feedback")
+        .select("name,email,area,feedback");
+
+    if (error) {
+        alert("Unable to download feedback.");
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        alert("No feedback available.");
+        return;
+    }
+
+    let csv = "Name,Email,Area,Feedback\n";
+
+    data.forEach(function(row) {
+
+        csv +=
+            '"' + (row.name || "").replace(/"/g, '""') + '",' +
+            '"' + (row.email || "").replace(/"/g, '""') + '",' +
+            '"' + (row.area || "General").replace(/"/g, '""') + '",' +
+            '"' + (row.feedback || "").replace(/"/g, '""') + '"\n';
+
+    });
+
+    const blob =
+        new Blob([csv], {
+            type: "text/csv;charset=utf-8;"
+        });
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "Feedback_Data.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
 </script>
 
 </body>
