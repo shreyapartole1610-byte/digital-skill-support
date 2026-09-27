@@ -589,6 +589,8 @@ async function adminLogin() {
     document.getElementById(
         "dashboardSection"
     ).style.display = "block";
+    
+    loadFacultySurveyResponses();
 
 
     document.getElementById(
@@ -1006,7 +1008,93 @@ function updateCharts(data) {
     );
 
   }
+/* FACULTY SURVEY RESPONSES */
 
+async function loadFacultySurveyResponses() {
+
+    const { data, error } =
+        await supabaseClient
+        .from("Quiz response")
+        .select("name,email,score,answers");
+
+    if (error) {
+        console.log("Quiz response error:", error);
+        return;
+    }
+
+    let section =
+        document.getElementById("facultySurveyResponses");
+
+    if (!section) {
+
+        section = document.createElement("section");
+
+        section.id = "facultySurveyResponses";
+
+        section.innerHTML = `
+            <h2>Faculty Survey Responses</h2>
+
+            <div style="overflow-x:auto;">
+                <table border="1" cellpadding="10"
+                       style="width:100%; border-collapse:collapse;">
+
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Q1</th>
+                            <th>Q2</th>
+                            <th>Q3</th>
+                            <th>Q4</th>
+                            <th>Q5</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="facultySurveyTableBody"></tbody>
+
+                </table>
+            </div>
+        `;
+
+        document
+            .getElementById("dashboardSection")
+            .appendChild(section);
+    }
+
+    const tbody =
+        document.getElementById("facultySurveyTableBody");
+
+    tbody.innerHTML = "";
+
+    if (!data || data.length === 0) {
+
+        tbody.innerHTML =
+            `<tr>
+                <td colspan="7">No survey responses found.</td>
+             </tr>`;
+
+        return;
+    }
+
+    data.forEach(function(row) {
+
+        const answers = row.answers || {};
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${row.name || ""}</td>
+            <td>${row.email || ""}</td>
+            <td>${answers.q1 || ""}</td>
+            <td>${answers.q2 || ""}</td>
+            <td>${answers.q3 || ""}</td>
+            <td>${answers.q4 || ""}</td>
+            <td>${answers.q5 || ""}</td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+    }
 /* LOGOUT */
 
 document.getElementById(
