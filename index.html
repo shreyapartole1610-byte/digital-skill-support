@@ -437,5 +437,115 @@ document.getElementById("feedbackForm").addEventListener("submit", async functio
     }   
 });
 </script>
+<!-- SURVEY RESPONSE SECTION -->
+
+<section id="survey-response">
+
+    <h2>Faculty Survey</h2>
+
+    <form id="surveyForm">
+
+        <input type="text" id="surveyName"
+        placeholder="Enter your name" required>
+
+        <input type="email" id="surveyEmail"
+        placeholder="Enter your email" required>
+
+        <p><b>1) Do you encourage students to work on real-world problem-solving projects?</b></p>
+        <label><input type="radio" name="q1" value="Yes" required> Yes</label>
+        <label><input type="radio" name="q1" value="No"> No</label>
+
+        <p><b>2) Are socially impactful projects included in your curriculum or guidance?</b></p>
+        <label><input type="radio" name="q2" value="Yes" required> Yes</label>
+        <label><input type="radio" name="q2" value="No"> No</label>
+
+        <p><b>3) Do students show interest in developing projects for community benefit?</b></p>
+        <label><input type="radio" name="q3" value="Yes" required> Yes</label>
+        <label><input type="radio" name="q3" value="No"> No</label>
+        <label><input type="radio" name="q3" value="Sometimes"> Sometimes</label>
+
+        <p><b>4) Which digital skills are most useful for social impact projects?</b></p>
+        <label><input type="radio" name="q4" value="Programming" required> Programming</label><br>
+        <label><input type="radio" name="q4" value="App Development"> App Development</label><br>
+        <label><input type="radio" name="q4" value="Web Development"> Web Development</label><br>
+        <label><input type="radio" name="q4" value="Data Analysis"> Data Analysis</label><br>
+        <label><input type="radio" name="q4" value="AI/ML"> AI/ML</label>
+
+        <p><b>5) Which social areas need technology intervention most?</b></p>
+        <label><input type="radio" name="q5" value="Education" required> Education</label><br>
+        <label><input type="radio" name="q5" value="Healthcare"> Healthcare</label><br>
+        <label><input type="radio" name="q5" value="Environment"> Environment</label><br>
+        <label><input type="radio" name="q5" value="Public Services"> Public Services</label><br>
+        <label><input type="radio" name="q5" value="Employment"> Employment</label>
+
+        <br><br>
+
+        <button type="submit">Submit Survey</button>
+
+        <p id="surveyMessage"></p>
+
+    </form>
+
+</section>
+<script>
+
+document.getElementById("surveyForm").addEventListener("submit", async function(e) {
+
+    e.preventDefault();
+
+    const name = document.getElementById("surveyName").value;
+    const email = document.getElementById("surveyEmail").value;
+
+    const answers = {
+        q1: document.querySelector('input[name="q1"]:checked').value,
+        q2: document.querySelector('input[name="q2"]:checked').value,
+        q3: document.querySelector('input[name="q3"]:checked').value,
+        q4: document.querySelector('input[name="q4"]:checked').value,
+        q5: document.querySelector('input[name="q5"]:checked').value
+    };
+
+    const response = await fetch(
+        SUPABASE_URL + "/rest/v1/QuizResponses",
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json",
+                "apikey": SUPABASE_KEY,
+                "Authorization": "Bearer " + SUPABASE_KEY,
+                "Prefer": "return=minimal"
+            },
+
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                score: 0,
+                answers: answers
+            })
+        }
+    );
+
+    const message =
+        document.getElementById("surveyMessage");
+
+    if (response.ok) {
+
+        message.innerText =
+            "Survey submitted successfully!";
+
+        document.getElementById("surveyForm").reset();
+
+    } else {
+
+        const errorText =
+            await response.text();
+
+        message.innerText =
+            "Error: " + errorText;
+    }
+
+});
+
+</script>
 </body>
 </html>
