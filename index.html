@@ -2,191 +2,484 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Digital Skill Support for Local Government Office</title>
+<title>Digital Skill Support for Local Government Office</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #222;
-        }
+<style>
 
-        header {
-            background: #174a7e;
-            color: white;
-            text-align: center;
-            padding: 35px 15px;
-        }
+/* =========================
+   GENERAL
+========================= */
 
-        header h1 {
-            margin: 0;
-            font-size: 28px;
-        }
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
 
-        header p {
-            font-size: 16px;
-        }
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+    color: #222;
+    line-height: 1.6;
+}
 
-        nav {
-            background: #0d2f52;
-            text-align: center;
-            padding: 15px 5px;
-        }
+.container {
+    width: 90%;
+    max-width: 1150px;
+    margin: auto;
+}
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 6px;
-            font-size: 14px;
-        }
 
-        section {
-            padding: 40px 20px;
-            text-align: center;
-        }
+/* =========================
+   HEADER
+========================= */
 
-        h2 {
-            color: #174a7e;
-        }
+header {
+    background: linear-gradient(135deg, #174a7e, #2878c8);
+    color: white;
+    text-align: center;
+    padding: 55px 20px;
+}
 
-        .welcome {
-            background: #dceeff;
-            padding: 45px 20px;
-        }
+header h1 {
+    margin: 0;
+    font-size: 38px;
+}
 
-        .button {
-            display: inline-block;
-            background: #174a7e;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 6px;
-            text-decoration: none;
-            margin-top: 15px;
-        }
+header p {
+    margin: 8px 0;
+    font-size: 17px;
+}
 
-        .cards {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 18px;
-        }
 
-        .card {
-            background: white;
-            padding: 22px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px #ccc;
-        }
+/* =========================
+   NAVIGATION
+========================= */
 
-        .card h3 {
-            color: #174a7e;
-        }
+nav {
+    background: #0d2f52;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 15px 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
 
-        ul {
-            text-align: left;
-            max-width: 500px;
-            margin: auto;
-        }
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 4px 10px;
+    padding: 7px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+}
 
-        li {
-            margin: 12px 0;
-        }
+nav a:hover {
+    background: #2878c8;
+}
 
-        form {
-            background: white;
-            padding: 25px;
-            max-width: 500px;
-            margin: auto;
-            border-radius: 10px;
-        }
 
-        input,
-        textarea,
-        select {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0 15px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+/* =========================
+   SECTIONS
+========================= */
 
-        input[type="radio"] {
-            width: auto;
-            margin: 5px;
-        }
+section {
+    padding: 60px 20px;
+    text-align: center;
+}
 
-        label {
-            display: inline-block;
-            margin: 5px;
-        }
+section h2 {
+    color: #174a7e;
+    font-size: 30px;
+    margin-bottom: 12px;
+}
 
-        button {
-            background: #174a7e;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+.section-intro {
+    max-width: 800px;
+    margin: 0 auto 30px;
+}
 
-        button:hover {
-            background: #0d2f52;
-        }
 
-        .success {
-            color: green;
-            font-weight: bold;
-        }
+/* =========================
+   HOME
+========================= */
 
-        .error {
-            color: red;
-            font-weight: bold;
-        }
+.welcome {
+    background: linear-gradient(
+        135deg,
+        #e5f2ff,
+        #ffffff
+    );
+    padding: 85px 20px;
+}
 
-        footer {
-            background: #0d2f52;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-    </style>
+.welcome h2 {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.welcome h3 {
+    color: #174a7e;
+    font-size: 24px;
+}
+
+.welcome p {
+    max-width: 750px;
+    margin: 10px auto;
+    font-size: 17px;
+}
+
+.button {
+    display: inline-block;
+    background: #174a7e;
+    color: white;
+    padding: 13px 28px;
+    border-radius: 7px;
+    text-decoration: none;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.button:hover {
+    background: #0d2f52;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.cards {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.card {
+    background: white;
+    padding: 28px 22px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+    transition: 0.3s;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.card h3 {
+    color: #174a7e;
+    margin-top: 5px;
+    font-size: 20px;
+}
+
+.card p {
+    color: #555;
+}
+
+
+/* =========================
+   ABOUT
+========================= */
+
+.about-box {
+    width: 90%;
+    max-width: 950px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+
+/* =========================
+   METHODOLOGY
+========================= */
+
+.methodology {
+    background: #eaf4ff;
+}
+
+.method-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    text-align: left;
+}
+
+.method-card h3 {
+    color: #174a7e;
+}
+
+
+/* =========================
+   SURVEY
+========================= */
+
+.survey-box {
+    background: white;
+    width: 90%;
+    max-width: 850px;
+    margin: auto;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+}
+
+
+/* =========================
+   TEAM
+========================= */
+
+.team-card {
+    text-align: center;
+}
+
+.team-card h3 {
+    font-size: 21px;
+}
+
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact-box {
+    background: #e5f2ff;
+    width: 90%;
+    max-width: 850px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+
+/* =========================
+   FORMS
+========================= */
+
+form {
+    background: white;
+    padding: 30px;
+    max-width: 650px;
+    margin: 25px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+    text-align: left;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 13px;
+    margin: 8px 0 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: Arial, sans-serif;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+input[type="radio"] {
+    width: auto;
+    margin: 5px;
+}
+
+label {
+    display: inline-block;
+    margin: 5px 10px 5px 0;
+}
+
+button {
+    background: #174a7e;
+    color: white;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #0d2f52;
+}
+
+.success {
+    color: green;
+    font-weight: bold;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    background: #0d2f52;
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+footer p {
+    margin: 5px;
+}
+
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 850px) {
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    header h1 {
+        font-size: 30px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 35px 15px;
+    }
+
+    header h1 {
+        font-size: 25px;
+    }
+
+    header p {
+        font-size: 14px;
+    }
+
+    nav {
+        position: relative;
+    }
+
+    nav a {
+        font-size: 13px;
+        margin: 3px;
+    }
+
+    section {
+        padding: 45px 15px;
+    }
+
+    .welcome {
+        padding: 55px 15px;
+    }
+
+    .welcome h2 {
+        font-size: 27px;
+    }
+
+    .welcome h3 {
+        font-size: 20px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+
+    .survey-box,
+    .contact-box,
+    .about-box {
+        width: 100%;
+        padding: 22px;
+    }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
-<!-- HEADER -->
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
+
     <h1>💻 Digital Skill Support</h1>
+
     <p>For Local Government Office</p>
-    <p>Empowering Offices Through Digital Skills & Cyber Safety</p>
+
+    <p>
+        Empowering Offices Through Digital Skills & Cyber Safety
+    </p>
+
 </header>
 
 
-<!-- NAVIGATION -->
+<!-- =========================
+     NAVIGATION
+========================= -->
 
 <nav>
+
     <a href="#home">Home</a>
+
     <a href="#about">About</a>
+
     <a href="#skills">Digital Skills</a>
+
+    <a href="#methodology">Methodology</a>
+
     <a href="#safety">Cyber Safety</a>
+
     <a href="#survey">Survey</a>
+
     <a href="#team">Project Team</a>
+
     <a href="#contact">Contact</a>
+
 </nav>
 
 
-<!-- HOME -->
+<!-- =========================
+     HOME
+========================= -->
 
 <section id="home" class="welcome">
 
     <h2>Welcome to Our Project</h2>
 
-    <h3>Digital Skill Support for Local Government Office</h3>
+    <h3>
+        Digital Skill Support for Local Government Office
+    </h3>
 
     <p>
         Empowering local government employees with essential
@@ -205,42 +498,75 @@
 </section>
 
 
-<!-- ABOUT -->
+<!-- =========================
+     ABOUT
+========================= -->
 
 <section id="about">
 
     <h2>📖 About Our Project</h2>
 
-    <p>
-        The Digital Skill Support for Local Government Office project
-        aims to improve the digital knowledge and confidence of employees
-        working in local government offices.
-    </p>
+    <div class="about-box">
+
+        <p>
+            The <strong>Digital Skill Support for Local Government
+            Office</strong> project aims to improve the digital
+            knowledge and confidence of employees working in
+            local government offices.
+        </p>
+
+        <p>
+            The project focuses on basic computer skills,
+            digital documentation, online services and
+            cybersecurity awareness.
+        </p>
+
+        <p>
+            Community interaction and survey activities were
+            conducted at
+            <strong>Kalyan-Dombivli Municipal Corporation (KDMC)</strong>
+            to understand digital skill requirements.
+        </p>
+
+    </div>
+
 
     <div class="cards">
 
         <div class="card">
+
             <h3>🎯 Project Aim</h3>
+
             <p>
-                To improve digital skills and promote safe use of
-                computers, internet services and digital tools.
+                To improve digital skills and promote safe use
+                of computers, internet services and digital tools.
             </p>
+
         </div>
 
+
         <div class="card">
+
             <h3>📌 Objectives</h3>
+
             <p>
-                Provide basic computer knowledge, digital documentation
-                skills, online service awareness and cybersecurity guidance.
+                Provide basic computer knowledge, digital
+                documentation skills, online service awareness
+                and cybersecurity guidance.
             </p>
+
         </div>
 
+
         <div class="card">
+
             <h3>🌟 Benefits</h3>
+
             <p>
                 Better productivity, easier digital communication,
                 improved online safety and efficient office work.
             </p>
+
         </div>
 
     </div>
@@ -248,146 +574,286 @@
 </section>
 
 
-<!-- DIGITAL SKILLS -->
+<!-- =========================
+     DIGITAL SKILLS
+========================= -->
 
 <section id="skills">
 
-    <h2>Digital Skills</h2>
+    <h2>💻 Digital Skills</h2>
 
-    <p>
-        Essential digital skills for effective work in local government offices.
+    <p class="section-intro">
+        Essential digital skills for effective work in
+        local government offices.
     </p>
+
 
     <div class="cards">
 
+
         <div class="card">
+
             <h3>💻 Computer Basics</h3>
+
             <p>
-                Learn basic computer operations, files, folders and device management.
+                Learn basic computer operations, files,
+                folders and device management.
             </p>
+
         </div>
 
+
         <div class="card">
+
             <h3>📄 Digital Documentation</h3>
+
             <p>
-                Create, edit, save and manage official digital documents efficiently.
+                Create, edit, save and manage official
+                digital documents efficiently.
             </p>
+
         </div>
 
+
         <div class="card">
+
             <h3>🌐 Internet Skills</h3>
+
             <p>
-                Use internet services and online government portals safely and effectively.
+                Use internet services and online government
+                portals safely and effectively.
             </p>
+
         </div>
 
+
         <div class="card">
+
             <h3>📧 Email Skills</h3>
+
             <p>
-                Use email for official communication and sharing important documents.
+                Use email for official communication and
+                sharing important documents.
             </p>
+
         </div>
 
+
         <div class="card">
+
             <h3>🔐 Cybersecurity</h3>
+
             <p>
-                Protect passwords, accounts and confidential government information.
+                Protect passwords, accounts and confidential
+                government information.
             </p>
+
         </div>
 
+
         <div class="card">
+
             <h3>📱 Digital Payments</h3>
+
             <p>
-                Understand safe and responsible use of digital payment methods.
+                Understand safe and responsible use of
+                digital payment methods.
             </p>
+
         </div>
+
 
     </div>
 
 </section>
 
 
-<!-- CYBER SAFETY -->
+<!-- =========================
+     METHODOLOGY
+========================= -->
+
+<section id="methodology" class="methodology">
+
+    <h2>📋 Methodology</h2>
+
+    <p class="section-intro">
+        The project was carried out through community
+        interaction, survey and analysis.
+    </p>
+
+
+    <div class="cards">
+
+
+        <div class="method-card">
+
+            <h3>1. Community Interaction</h3>
+
+            <p>
+                Interaction was conducted at
+                Kalyan-Dombivli Municipal Corporation
+                to understand digital skill requirements.
+            </p>
+
+        </div>
+
+
+        <div class="method-card">
+
+            <h3>2. Survey</h3>
+
+            <p>
+                A survey was conducted to collect information
+                about digital skills, online services and
+                cyber safety awareness.
+            </p>
+
+        </div>
+
+
+        <div class="method-card">
+
+            <h3>3. Data Analysis</h3>
+
+            <p>
+                The collected responses were analysed to
+                understand common digital challenges and
+                requirements.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CYBER SAFETY
+========================= -->
 
 <section id="safety">
 
     <h2>🔐 Cyber Safety</h2>
 
-    <p>
+    <p class="section-intro">
         Follow these simple safety practices to protect
         official data, accounts and devices.
     </p>
 
+
     <div class="cards">
 
+
         <div class="card">
+
             <h3>🔑 Strong Passwords</h3>
+
             <p>
-                Use strong and unique passwords for official accounts.
+                Use strong and unique passwords for
+                official accounts.
             </p>
+
         </div>
 
+
         <div class="card">
+
             <h3>📱 Two-Factor Authentication</h3>
+
             <p>
-                Enable 2FA to add an extra layer of account security.
+                Enable 2FA to add an extra layer of
+                account security.
             </p>
+
         </div>
 
+
         <div class="card">
+
             <h3>🚫 Avoid Suspicious Links</h3>
+
             <p>
-                Do not click unknown links or open suspicious attachments.
+                Do not click unknown links or open
+                suspicious attachments.
             </p>
+
         </div>
 
+
         <div class="card">
+
             <h3>🔄 Keep Software Updated</h3>
+
             <p>
-                Regularly update operating systems, apps and security software.
+                Regularly update operating systems,
+                apps and security software.
             </p>
+
         </div>
 
+
         <div class="card">
+
             <h3>💾 Backup Important Data</h3>
+
             <p>
-                Keep regular backups of important office documents and data.
+                Keep regular backups of important
+                office documents and data.
             </p>
+
         </div>
 
+
         <div class="card">
+
             <h3>🔒 Protect Confidential Data</h3>
+
             <p>
-                Never share passwords, OTPs or sensitive government information.
+                Never share passwords, OTPs or sensitive
+                government information.
             </p>
+
         </div>
+
 
     </div>
 
 </section>
 
 
-<!-- GOOGLE SURVEY -->
+<!-- =========================
+     GOOGLE SURVEY
+========================= -->
 
 <section id="survey">
 
-    <h2>Office Survey</h2>
+    <h2>📝 Office Survey</h2>
 
-    <p>
-        Please complete our survey to help us understand
-        digital skill requirements in local government offices.
-    </p>
+    <div class="survey-box">
 
-    <a href="https://forms.gle/XaqRJC6HYRmwdsCR7"
-       target="_blank"
-       class="button">
-       📝 Open Survey Form
-    </a>
+        <p>
+            Please complete our survey to help us understand
+            digital skill requirements in local government offices.
+        </p>
+
+        <a
+            href="https://forms.gle/XaqRJC6HYRmwdsCR7"
+            target="_blank"
+            class="button"
+        >
+            📝 Open Survey Form
+        </a>
+
+    </div>
 
 </section>
 
 
-<!-- PROJECT TEAM -->
+<!-- =========================
+     PROJECT TEAM
+========================= -->
 
 <section id="team">
 
@@ -395,43 +861,41 @@
 
     <div class="cards">
 
-        <div class="card">
 
-            <h3>Student Details</h3>
+        <div class="card team-card">
 
-            <p>
-                <strong>1. Shreya P Partole</strong><br>
-                Roll No.: 39
-            </p>
+            <h3>Shreya P Partole</h3>
 
             <p>
-                <strong>2. Payal K Gawale</strong><br>
-                Roll No.: 37
-            </p>
-
-            <p>
-                <strong>3. Arya N Kor</strong><br>
-                Roll No.: 27
-            </p>
-
-            <p>
-                <strong>Course:</strong>
-                B.Sc. Information Technology
-            </p>
-
-            <p>
-                <strong>College:</strong>
-                K.M. Agrawal College
-            </p>
-
-            <p>
-                <strong>Project:</strong>
-                Digital Skill Support for Local Government Office
+                <strong>Roll No.:</strong> 39
             </p>
 
         </div>
 
-        <div class="card">
+
+        <div class="card team-card">
+
+            <h3>Payal K Gawale</h3>
+
+            <p>
+                <strong>Roll No.:</strong> 37
+            </p>
+
+        </div>
+
+
+        <div class="card team-card">
+
+            <h3>Arya N Kor</h3>
+
+            <p>
+                <strong>Roll No.:</strong> 27
+            </p>
+
+        </div>
+
+
+        <div class="card team-card">
 
             <h3>Project Guide</h3>
 
@@ -441,45 +905,98 @@
 
         </div>
 
+
     </div>
 
 </section>
 
 
-<!-- CONTACT -->
+<!-- =========================
+     COURSE AND COLLEGE
+========================= -->
 
-<section id="contact">
+<section id="course">
 
-    <h2>Contact Us</h2>
+    <h2>🏫 Course and College</h2>
 
-    <p>🏫 College Name: K.M. Agrawal College</p>
+    <div class="about-box">
 
-    <p>
-        📚 Project: Digital Skill Support for Local Government Office
-    </p>
+        <p>
+            <strong>Course:</strong>
+            B.Sc. Information Technology
+        </p>
 
-    <p>
-        👩‍💻 Department: B.Sc. Information Technology
-    </p>
+        <p>
+            <strong>College:</strong>
+            K.M. Agrawal College
+        </p>
 
-    <p>
-        📧 Email: digitalskills@example.com
-    </p>
+        <p>
+            <strong>Project:</strong>
+            Digital Skill Support for Local Government Office
+        </p>
 
-    <p>
-        👨‍🏫 Project Guide: Prof. Preeti Sarode Mam
-    </p>
+        <p>
+            <strong>Project Guide:</strong>
+            Prof. Preeti Sarode Mam
+        </p>
+
+    </div>
 
 </section>
 
 
-<!-- FEEDBACK -->
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section id="contact">
+
+    <h2>📞 Contact Us</h2>
+
+    <div class="contact-box">
+
+        <p>
+            🏫 <strong>College:</strong>
+            K.M. Agrawal College
+        </p>
+
+        <p>
+            📚 <strong>Department:</strong>
+            B.Sc. Information Technology
+        </p>
+
+        <p>
+            📋 <strong>Project:</strong>
+            Digital Skill Support for Local Government Office
+        </p>
+
+        <p>
+            👩‍🏫 <strong>Project Guide:</strong>
+            Prof. Preeti Sarode Mam
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FEEDBACK
+========================= -->
 
 <section id="database-feedback">
 
-    <h2>Feedback</h2>
+    <h2>💬 Feedback</h2>
+
+    <p class="section-intro">
+        Share your feedback about our project.
+    </p>
+
 
     <form id="feedbackForm">
+
+        <label>Name</label>
 
         <input
             type="text"
@@ -488,6 +1005,9 @@
             required
         >
 
+
+        <label>Email</label>
+
         <input
             type="email"
             id="email"
@@ -495,15 +1015,20 @@
             required
         >
 
+
+        <label>Feedback</label>
+
         <textarea
             id="feedback"
             placeholder="Enter your feedback"
             required
         ></textarea>
 
+
         <button type="submit">
             Submit Feedback
         </button>
+
 
         <p id="message"></p>
 
@@ -512,13 +1037,23 @@
 </section>
 
 
-<!-- FACULTY SURVEY -->
+<!-- =========================
+     FACULTY SURVEY
+========================= -->
 
 <section id="survey-response">
 
-    <h2>Faculty Survey</h2>
+    <h2>👨‍🏫 Faculty Survey</h2>
+
+    <p class="section-intro">
+        Faculty feedback helps us understand the importance
+        of digital skills and socially impactful projects.
+    </p>
+
 
     <form id="surveyForm">
+
+        <label>Name</label>
 
         <input
             type="text"
@@ -527,12 +1062,16 @@
             required
         >
 
+
+        <label>Email</label>
+
         <input
             type="email"
             id="surveyEmail"
             placeholder="Enter your email"
             required
         >
+
 
         <p>
             <b>
@@ -633,253 +1172,4 @@
             </b>
         </p>
 
-        <label>
-            <input type="radio" name="q5" value="Education" required>
-            Education
-        </label>
-
-        <label>
-            <input type="radio" name="q5" value="Healthcare">
-            Healthcare
-        </label>
-
-        <label>
-            <input type="radio" name="q5" value="Environment">
-            Environment
-        </label>
-
-        <label>
-            <input type="radio" name="q5" value="Public Services">
-            Public Services
-        </label>
-
-        <label>
-            <input type="radio" name="q5" value="Employment">
-            Employment
-        </label>
-
-
-        <br><br>
-
-        <button type="submit">
-            Submit Survey
-        </button>
-
-        <p id="surveyMessage"></p>
-
-    </form>
-
-</section>
-
-
-<!-- FOOTER -->
-
-<footer>
-
-    <p>
-        © 2026 Digital Skill Support for Local Government Office
-    </p>
-
-    <p>
-        B.Sc. Information Technology | K.M. Agrawal College
-    </p>
-
-    <p>
-        Guided by Prof. Preeti Sarode Mam
-    </p>
-
-</footer>
-
-
-<!-- SUPABASE -->
-
-<script>
-
-const SUPABASE_URL =
-    "https://lmojlnoiqqagifxoshgn.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_yldulfbRu9jgYHVhcUOe7A_PvmEs-v1";
-
-
-/* =========================
-   FEEDBACK SUBMISSION
-========================= */
-
-document.getElementById("feedbackForm").addEventListener(
-    "submit",
-    async function(e) {
-
-        e.preventDefault();
-
-        const name =
-            document.getElementById("name").value;
-
-        const email =
-            document.getElementById("email").value;
-
-        const feedback =
-            document.getElementById("feedback").value;
-
-
-        const response = await fetch(
-            SUPABASE_URL + "/rest/v1/Feedback",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json",
-                    "apikey": SUPABASE_KEY,
-                    "Authorization":
-                        "Bearer " + SUPABASE_KEY,
-                    "Prefer": "return=minimal"
-                },
-
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    area: "General",
-                    feedback: feedback
-                })
-            }
-        );
-
-
-        const message =
-            document.getElementById("message");
-
-
-        if (response.ok) {
-
-            message.innerText =
-                "Feedback submitted successfully!";
-
-            message.className = "success";
-
-            document
-                .getElementById("feedbackForm")
-                .reset();
-
-        } else {
-
-            const errorText =
-                await response.text();
-
-            message.innerText =
-                "Error: " + errorText;
-
-            message.className = "error";
-        }
-
-    }
-);
-
-
-/* =========================
-   FACULTY SURVEY
-========================= */
-
-document.getElementById("surveyForm").addEventListener(
-    "submit",
-    async function(e) {
-
-        e.preventDefault();
-
-
-        const name =
-            document.getElementById("surveyName").value;
-
-        const email =
-            document.getElementById("surveyEmail").value;
-
-
-        const answers = {
-
-            q1:
-                document.querySelector(
-                    'input[name="q1"]:checked'
-                ).value,
-
-            q2:
-                document.querySelector(
-                    'input[name="q2"]:checked'
-                ).value,
-
-            q3:
-                document.querySelector(
-                    'input[name="q3"]:checked'
-                ).value,
-
-            q4:
-                document.querySelector(
-                    'input[name="q4"]:checked'
-                ).value,
-
-            q5:
-                document.querySelector(
-                    'input[name="q5"]:checked'
-                ).value
-        };
-
-
-        const response = await fetch(
-            SUPABASE_URL +
-            "/rest/v1/Quiz%20response",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json",
-                    "apikey": SUPABASE_KEY,
-                    "Authorization":
-                        "Bearer " + SUPABASE_KEY,
-                    "Prefer": "return=minimal"
-                },
-
-                body: JSON.stringify({
-
-                    name: name,
-
-                    email: email,
-
-                    score: 0,
-
-                    answers: answers
-                })
-            }
-        );
-
-
-        const message =
-            document.getElementById("surveyMessage");
-
-
-        if (response.ok) {
-
-            message.innerText =
-                "Survey submitted successfully!";
-
-            message.className = "success";
-
-            document
-                .getElementById("surveyForm")
-                .reset();
-
-        } else {
-
-            const errorText =
-                await response.text();
-
-            message.innerText =
-                "Error: " + errorText;
-
-            message.className = "error";
-        }
-
-    }
-);
-
-</script>
-
-</body>
-</html>
+        <lab
