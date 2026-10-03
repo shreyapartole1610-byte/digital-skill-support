@@ -67,12 +67,24 @@
             text-decoration: none;
             margin-top: 15px;
         }
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    max-width: 1200px;
+    margin: 25px auto 0;
+}
+        @media (max-width: 900px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-        .cards {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 18px;
-        }
+@media (max-width: 600px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}
 
         .card {
             background: white;
@@ -153,6 +165,44 @@
             text-align: center;
             padding: 20px;
         }
+        .services {
+    background: #eef5fc;
+}
+
+.service-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.service-button {
+    display: inline-block;
+    background: #174a7e;
+    color: white;
+    text-decoration: none;
+    padding: 15px 35px;
+    border-radius: 7px;
+    min-width: 180px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.service-button:hover {
+    background: #0d2f52;
+}
+
+@media (max-width: 600px) {
+    .service-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service-button {
+        width: 90%;
+    }
+}
     </style>
 </head>
 
@@ -366,7 +416,39 @@
 
 </section>
 
+<!-- USEFUL DIGITAL SERVICES -->
 
+<section id="services" class="services">
+
+    <h2>🌐 Useful Digital Services</h2>
+
+    <p>
+        Access useful official digital services and cyber safety resources.
+    </p>
+
+    <div class="service-buttons">
+
+        <a href="https://www.digilocker.gov.in/"
+           target="_blank"
+           class="service-button">
+            📁 DigiLocker
+        </a>
+
+        <a href="https://www.cert-in.org.in/"
+           target="_blank"
+           class="service-button">
+            🔐 Cyber Safety
+        </a>
+
+        <a href="https://www.mahaonline.gov.in/"
+           target="_blank"
+           class="service-button">
+            🏛️ MahaOnline
+        </a>
+
+    </div>
+
+</section>
 <!-- GOOGLE SURVEY -->
 
 <section id="survey">
@@ -878,7 +960,31 @@ document.getElementById("surveyForm").addEventListener(
 
     }
 );
+document.getElementById("quizForm").addEventListener("submit", function(e) {
 
+    e.preventDefault();
+
+    let score = 0;
+
+    const answers = ["quiz1", "quiz2", "quiz3"];
+
+    answers.forEach(function(question) {
+
+        const selected = document.querySelector(
+            'input[name="' + question + '"]:checked'
+        );
+
+        if (selected && selected.value === "correct") {
+            score++;
+        }
+
+    });
+
+    const result = document.getElementById("quizResult");
+
+    result.innerText = "Your Score: " + score + " / 3";
+
+});
 </script>
 
 </body>
